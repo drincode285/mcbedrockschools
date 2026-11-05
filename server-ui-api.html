@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@minecraft/server-ui & Simulator — MCBedrockSchools</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="server-ui" data-next-page="versions.html" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- W3SCHOOLS TOP HEADER -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileSidebarBtn" type="button" class="lg:hidden shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700" aria-label="Toggle Menu">
+          ☰
+        </button>
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-9 h-9 shrink-0 rounded-lg shadow" />
+          <div class="min-w-0 hidden min-[400px]:block">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-white">MCBedrock</span><span class="font-extrabold text-base sm:text-lg tracking-tight text-[#04AA6D]">Schools</span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">W3-Style Docs</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">In-Game Dialogs & Live Form Simulator</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="relative hidden md:block w-64">
+          <input id="globalSearchInput" type="text" placeholder="Search lessons, API, ZArchiver..." class="w-full bg-slate-800 border border-slate-700 focus:border-[#04AA6D] rounded-lg px-3 py-1.5 text-xs text-slate-100 outline-none" />
+          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-10 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50 divide-y divide-slate-800"></div>
+        </div>
+        <a href="tryit-practice.html" class="hidden sm:inline-block px-3 py-1.5 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white font-semibold text-xs">⚡ Try It Lab</a>
+        <div class="flex items-center gap-1.5 bg-slate-800 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs">
+          <span class="text-amber-400 font-bold">★</span>
+          <span id="xpCounterBadge" class="font-mono font-semibold text-emerald-400">0 XP</span>
+        </div>
+        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- SEPARATE MODULE TABS BAR (Links to each dedicated .html page) -->
+    <nav class="bg-slate-950 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+      <div id="topNavTabs" class="max-w-[1440px] mx-auto px-2 sm:px-6 flex items-center gap-1 py-1.5 min-w-max"></div>
+    </nav>
+  </header>
+
+  <!-- WORKSPACE BODY (W3SCHOOLS LEFT SIDEBAR + BITE-SIZED PAGINATED LESSON VIEW) -->
+  <div class="max-w-[1440px] w-full mx-auto flex-1 flex relative">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900/95 border-r border-slate-800 shrink-0 hidden lg:flex flex-col justify-between p-4 sticky top-[105px] h-[calc(100vh-105px)] overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Chapter Lessons</h2>
+          <span id="sidebarLessonCount" class="text-[11px] font-mono text-slate-400">Lessons</span>
+        </div>
+        <div id="sidebarLessonList" class="space-y-1"></div>
+
+        <!-- Instant UUID v4 Tool -->
+        <div class="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-slate-200">🔑 Instant UUID v4</span>
+            <button id="sidebarGenUuidBtn" type="button" class="text-[11px] px-2 py-0.5 rounded bg-[#04AA6D] text-white font-semibold">New</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <input id="sidebarUuidOutput" type="text" readonly value="f47ac10b-58cc-4372-a567-0e02b2c3d479" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300 outline-none" />
+            <button id="sidebarCopyUuidBtn" type="button" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs border border-slate-700">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="text-slate-400">Exercise Progress</span>
+          <span id="sidebarCompletedText" class="font-mono font-bold text-emerald-400">0 / 6</span>
+        </div>
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="sidebarProgressBar" class="h-full bg-[#04AA6D] transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+    <div id="mobileDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 z-50 p-4 overflow-y-auto hidden lg:hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <span class="font-bold text-sm text-emerald-400">📚 Chapter Lessons</span>
+        <button id="closeMobileDrawerBtn" type="button" class="p-1.5 rounded bg-slate-800 text-slate-300 text-xs">✕</button>
+      </div>
+      <div id="mobileSidebarLessonList" class="space-y-1"></div>
+    </div>
+
+    <!-- MAIN LESSON VIEW (Paginated so it is never overwhelming to scroll) -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Top W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <span id="stepPageIndicator" class="text-xs font-mono text-emerald-400 font-semibold">Lesson 1</span>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+
+      
+<div class="lesson-step active space-y-5" data-step-title="1. ActionFormData (Buttons UI)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 1: <code class="text-[#04AA6D]">ActionFormData</code> (Menu na may Buttons)</h1>
+  <p class="text-sm text-slate-300">Ginagamit para sa RPG Class Picker, Server Warps, at NPC Shops. Subukang i-click ang buttons sa <strong>Live UI Simulator</strong> sa kanan!</p>
+  <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">📦 Ang mga halimbawa sa page na ito ay para sa <code class="text-emerald-300">@minecraft/server-ui</code> <strong>2.2.0</strong> (Minecraft 1.26.50) — tingnan ang <a href="versions.html" class="text-emerald-400 underline">version matrix</a>. Kailangan itong nakalista sa <code class="text-emerald-300">dependencies</code> ng manifest mo.</div>
+  <div class="grid lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-7 w3-example-card m-0 space-y-3">
+      <pre class="w3-code-box"><code>import { ActionFormData } from "@minecraft/server-ui";
+
+const form = new ActionFormData()
+  .title("Pumili ng Iyong RPG Class")
+  .body("Piliin ang starter kit na gusto mong gamitin:")
+  .button("🗡️ Mandirigma (+15 ATK)")
+  .button("🏹 Mangangaso (Speed II)")
+  .button("✨ Babaylan (Regen Aura)");
+
+form.show(player).then((res) =&gt; {
+  if (res.canceled) return;
+  player.sendMessage("Selected button index: " + res.selection);
+});</code></pre>
+    </div>
+    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <span class="text-xs font-mono text-emerald-400 font-bold">🎮 Live ActionFormData Preview</span>
+      <div id="simActionFormCanvas" class="mc-ui-modal p-4 space-y-2.5">
+        <div class="font-bold text-sm border-b border-neutral-600 pb-1">Pumili ng Iyong RPG Class</div>
+        <p class="text-xs">Piliin ang starter kit na gusto mong gamitin:</p>
+        <button type="button" data-sim-btn="0" data-sim-label="Mandirigma (+15 ATK)" class="mc-ui-button w-full py-2 px-3 text-left font-bold text-xs">🗡️ Mandirigma (+15 ATK)</button>
+        <button type="button" data-sim-btn="1" data-sim-label="Mangangaso (Speed II)" class="mc-ui-button w-full py-2 px-3 text-left font-bold text-xs">🏹 Mangangaso (Speed II)</button>
+        <button type="button" data-sim-btn="2" data-sim-label="Babaylan (Regen Aura)" class="mc-ui-button w-full py-2 px-3 text-left font-bold text-xs">✨ Babaylan (Regen Aura)</button>
+      </div>
+      <div id="simActionFormResponse" class="p-2.5 rounded bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-300">Click any button above...</div>
+    </div>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="2. ModalFormData (Inputs & Sliders)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 2: <code class="text-[#04AA6D]">ModalFormData</code> (Textfields, Sliders, Dropdowns, Toggles)</h1>
+  <div class="grid lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-7 w3-example-card m-0">
+      <pre class="w3-code-box"><code>import { ModalFormData } from "@minecraft/server-ui";
+
+const modal = new ModalFormData()
+  .title("⚙️ Add-On Skill Settings")
+  .textField("Custom Guild Tag:", "[PH]", { defaultValue: "[PH]" })
+  .slider("Dash Power Level", 1, 10, { valueStep: 1, defaultValue: 5 })
+  .dropdown("Element", ["Apoy", "Kidlat", "Hangin"], { defaultValueIndex: 0 })
+  .toggle("Show ActionBar HUD", { defaultValue: true });
+
+modal.show(player).then((res) =&gt; {
+  if (!res.canceled) console.warn(JSON.stringify(res.formValues));
+});</code></pre>
+    </div>
+    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <span class="text-xs font-mono text-emerald-400 font-bold">🎮 Live ModalFormData Preview</span>
+      <div class="mc-ui-modal p-4 space-y-2.5 text-xs">
+        <div class="font-bold text-sm border-b border-neutral-600 pb-1">⚙️ Add-On Skill Settings</div>
+        <div>
+          <label class="block font-bold mb-1">Custom Guild Tag:</label>
+          <input id="simModalText" type="text" value="[PH]" class="w-full bg-neutral-800 text-white px-2 py-1 border border-black font-mono" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Dash Power: <span id="simModalSliderVal">5</span></label>
+          <input id="simModalSlider" type="range" min="1" max="10" value="5" class="w-full" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Element:</label>
+          <select id="simModalDropdown" class="w-full bg-neutral-800 text-white px-2 py-1 border border-black">
+            <option value="0">Apoy</option>
+            <option value="1">Kidlat</option>
+            <option value="2">Hangin</option>
+          </select>
+        </div>
+        <label class="flex items-center gap-2 font-bold">
+          <input id="simModalToggle" type="checkbox" checked />
+          <span>Show ActionBar HUD</span>
+        </label>
+        <button id="simModalSubmitBtn" type="button" class="mc-ui-button w-full py-2 font-bold">Submit</button>
+      </div>
+      <div id="simModalFormResponse" class="p-2.5 rounded bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-300">Click Submit to inspect formValues...</div>
+    </div>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="3. MessageFormData (Yes/No Box)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 3: <code class="text-[#04AA6D]">MessageFormData</code> (Two-Button Confirmation Dialog)</h1>
+  <div class="grid lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-7 w3-example-card m-0">
+      <pre class="w3-code-box"><code>import { MessageFormData } from "@minecraft/server-ui";
+
+const msg = new MessageFormData()
+  .title("⚠️ Boss Arena Warning")
+  .body("Papasok ka na ba sa Bakunawa Lair?")
+  .button1("✅ Oo, Pumasok!")
+  .button2("❌ Huwag Muna");</code></pre>
+    </div>
+    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div id="simMessageFormCanvas" class="mc-ui-modal p-4 space-y-3 text-xs">
+        <div class="font-bold text-sm border-b border-neutral-600 pb-1">⚠️ Boss Arena Warning</div>
+        <p>Papasok ka na ba sa Bakunawa Lair?</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" data-msg-btn="0" class="mc-ui-button py-2 font-bold">✅ Oo, Pumasok!</button>
+          <button type="button" data-msg-btn="1" class="mc-ui-button py-2 font-bold">❌ Huwag Muna</button>
+        </div>
+      </div>
+      <div id="simMessageFormResponse" class="p-2.5 rounded bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-300">Click a button above...</div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Bottom W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-5 mt-8">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <a href="tryit-practice.html" class="order-last basis-full text-center sm:order-none sm:basis-auto text-xs text-emerald-400 hover:underline font-semibold">⚡ Buksan ang Try It Yourself Simulator</a>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="scripts/common.js"></script>
+  <script src="scripts/server-ui-simulator.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Try It & Practice Exercises — MCBedrockSchools</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="practice" data-next-page="index.html" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- W3SCHOOLS TOP HEADER -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileSidebarBtn" type="button" class="lg:hidden shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700" aria-label="Toggle Menu">
+          ☰
+        </button>
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-9 h-9 shrink-0 rounded-lg shadow" />
+          <div class="min-w-0 hidden min-[400px]:block">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-white">MCBedrock</span><span class="font-extrabold text-base sm:text-lg tracking-tight text-[#04AA6D]">Schools</span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">W3-Style Docs</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">Interactive Code Simulator & W3Schools Exercises</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="relative hidden md:block w-64">
+          <input id="globalSearchInput" type="text" placeholder="Search lessons, API, ZArchiver..." class="w-full bg-slate-800 border border-slate-700 focus:border-[#04AA6D] rounded-lg px-3 py-1.5 text-xs text-slate-100 outline-none" />
+          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-10 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50 divide-y divide-slate-800"></div>
+        </div>
+        <a href="tryit-practice.html" class="hidden sm:inline-block px-3 py-1.5 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white font-semibold text-xs">⚡ Try It Lab</a>
+        <div class="flex items-center gap-1.5 bg-slate-800 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs">
+          <span class="text-amber-400 font-bold">★</span>
+          <span id="xpCounterBadge" class="font-mono font-semibold text-emerald-400">0 XP</span>
+        </div>
+        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- SEPARATE MODULE TABS BAR (Links to each dedicated .html page) -->
+    <nav class="bg-slate-950 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+      <div id="topNavTabs" class="max-w-[1440px] mx-auto px-2 sm:px-6 flex items-center gap-1 py-1.5 min-w-max"></div>
+    </nav>
+  </header>
+
+  <!-- WORKSPACE BODY (W3SCHOOLS LEFT SIDEBAR + BITE-SIZED PAGINATED LESSON VIEW) -->
+  <div class="max-w-[1440px] w-full mx-auto flex-1 flex relative">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900/95 border-r border-slate-800 shrink-0 hidden lg:flex flex-col justify-between p-4 sticky top-[105px] h-[calc(100vh-105px)] overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Chapter Lessons</h2>
+          <span id="sidebarLessonCount" class="text-[11px] font-mono text-slate-400">Lessons</span>
+        </div>
+        <div id="sidebarLessonList" class="space-y-1"></div>
+
+        <!-- Instant UUID v4 Tool -->
+        <div class="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-slate-200">🔑 Instant UUID v4</span>
+            <button id="sidebarGenUuidBtn" type="button" class="text-[11px] px-2 py-0.5 rounded bg-[#04AA6D] text-white font-semibold">New</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <input id="sidebarUuidOutput" type="text" readonly value="f47ac10b-58cc-4372-a567-0e02b2c3d479" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300 outline-none" />
+            <button id="sidebarCopyUuidBtn" type="button" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs border border-slate-700">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="text-slate-400">Exercise Progress</span>
+          <span id="sidebarCompletedText" class="font-mono font-bold text-emerald-400">0 / 6</span>
+        </div>
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="sidebarProgressBar" class="h-full bg-[#04AA6D] transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+    <div id="mobileDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 z-50 p-4 overflow-y-auto hidden lg:hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <span class="font-bold text-sm text-emerald-400">📚 Chapter Lessons</span>
+        <button id="closeMobileDrawerBtn" type="button" class="p-1.5 rounded bg-slate-800 text-slate-300 text-xs">✕</button>
+      </div>
+      <div id="mobileSidebarLessonList" class="space-y-1"></div>
+    </div>
+
+    <!-- MAIN LESSON VIEW (Paginated so it is never overwhelming to scroll) -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Top W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <span id="stepPageIndicator" class="text-xs font-mono text-emerald-400 font-semibold">Lesson 1</span>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+
+      
+<div class="lesson-step active space-y-5" data-step-title="1. Try It Yourself Simulator">
+  <h1 class="text-2xl font-extrabold text-white">⚡ W3Schools "Try It Yourself" Script API Simulator</h1>
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <select id="tryItPresetSelect" class="w-full sm:w-auto max-w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-emerald-300">
+        <option value="welcome_spawn">Preset 1: Welcome Player Spawn Message</option>
+        <option value="item_use_skill">Preset 2: Custom Item Right-Click Dash &amp; Heal</option>
+        <option value="hit_fire_effect">Preset 3: Flaming Sword Hit Entity Event</option>
+        <option value="tick_loop_hud">Preset 4: ActionBar HUD Tick Loop (20 Ticks)</option>
+        <option value="action_form_shop">Preset 5: ActionFormData In-Game Shop UI</option>
+        <option value="variables_loops">Preset 6: Variables &amp; for...of Loop</option>
+        <option value="before_break_protect">Preset 7: beforeEvents — Block Protection</option>
+        <option value="item_cooldown">Preset 8: Item Skill na may Cooldown</option>
+      </select>
+      <div class="flex gap-2">
+        <button id="runTryItBtn" type="button" class="w3-btn-green text-xs">▶ Run Script</button>
+        <button id="copyTryItBtn" type="button" class="px-3 py-2 rounded-lg bg-slate-800 text-xs text-slate-200 border border-slate-700">📋 Copy</button>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-4">
+      <textarea id="tryItCodeEditor" rows="12" spellcheck="false" class="w-full min-w-0 bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-300 outline-none"></textarea>
+      <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col justify-between space-y-3">
+        <div class="space-y-2">
+          <div class="flex flex-wrap justify-between gap-x-3 gap-y-1 text-xs bg-slate-900 px-3 py-2 rounded border border-slate-800">
+            <span>👤 Player: <strong class="text-emerald-400">JuanModderPH</strong></span>
+            <span>❤️ HP: <strong id="simPlayerHp" class="text-rose-400">20 / 20</strong></span>
+          </div>
+          <div id="simEventLabel" class="text-[11px] font-mono text-amber-400"></div>
+          <div id="simActionBarBox" class="text-center py-1.5 px-3 rounded bg-black/60 border border-slate-800 font-mono text-xs text-sky-300"></div>
+          <div id="simChatLog" class="space-y-1 font-mono text-xs max-h-40 overflow-y-auto p-2 rounded bg-slate-900 break-words"></div>
+        </div>
+        <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-800">
+          <button type="button" data-sim-trigger="spawn" class="sim-event-btn px-2.5 py-1 rounded bg-slate-800 text-xs">🚶 playerSpawn</button>
+          <button type="button" data-sim-trigger="itemUse" class="sim-event-btn px-2.5 py-1 rounded bg-slate-800 text-xs">🗡️ itemUse</button>
+          <button type="button" data-sim-trigger="hitEntity" class="sim-event-btn px-2.5 py-1 rounded bg-slate-800 text-xs">💥 entityHitEntity</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="2. Coding Exercises (6 Challenges)">
+  <h1 class="text-2xl font-extrabold text-white">🎯 W3Schools Fill-in-the-Blank Exercises</h1>
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+    <div id="exerciseListPills" class="flex flex-wrap gap-1.5"></div>
+    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
+      <h3 id="exerciseQuestionTitle" class="text-base font-bold text-white"></h3>
+      <p id="exerciseQuestionPrompt" class="text-xs sm:text-sm text-slate-300"></p>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs sm:text-sm flex flex-wrap items-center gap-2">
+        <span id="exerciseCodePrefix"></span>
+        <input id="exerciseAnswerInput" type="text" class="bg-slate-950 border-2 border-emerald-500/60 rounded px-2.5 py-1 text-emerald-300 font-mono w-44 outline-none" />
+        <span id="exerciseCodeSuffix"></span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="submitExerciseBtn" type="button" class="w3-btn-green text-xs">Submit Answer »</button>
+        <button id="showExerciseAnswerBtn" type="button" class="px-3.5 py-2 rounded-lg bg-slate-800 text-xs text-slate-300">Show Hint / Answer</button>
+        <span id="exerciseFeedbackText" class="text-xs font-semibold"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Bottom W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-5 mt-8">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <a href="tryit-practice.html" class="order-last basis-full text-center sm:order-none sm:basis-auto text-xs text-emerald-400 hover:underline font-semibold">⚡ Buksan ang Try It Yourself Simulator</a>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="scripts/common.js"></script>
+  <script src="scripts/tryit-lab.js"></script>
+</body>
+</html>

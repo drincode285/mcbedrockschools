@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home & Courses — MCBedrockSchools</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="home" data-next-page="beginner-guide.html" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- W3SCHOOLS TOP HEADER -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileSidebarBtn" type="button" class="lg:hidden shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700" aria-label="Toggle Menu">
+          ☰
+        </button>
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-9 h-9 shrink-0 rounded-lg shadow" />
+          <div class="min-w-0 hidden min-[400px]:block">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-white">MCBedrock</span><span class="font-extrabold text-base sm:text-lg tracking-tight text-[#04AA6D]">Schools</span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">W3-Style Docs</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">W3Schools-Style Minecraft Bedrock Modding Portal</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="relative hidden md:block w-64">
+          <input id="globalSearchInput" type="text" placeholder="Search lessons, API, ZArchiver..." class="w-full bg-slate-800 border border-slate-700 focus:border-[#04AA6D] rounded-lg px-3 py-1.5 text-xs text-slate-100 outline-none" />
+          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-10 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50 divide-y divide-slate-800"></div>
+        </div>
+        <a href="tryit-practice.html" class="hidden sm:inline-block px-3 py-1.5 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white font-semibold text-xs">⚡ Try It Lab</a>
+        <div class="flex items-center gap-1.5 bg-slate-800 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs">
+          <span class="text-amber-400 font-bold">★</span>
+          <span id="xpCounterBadge" class="font-mono font-semibold text-emerald-400">0 XP</span>
+        </div>
+        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- SEPARATE MODULE TABS BAR (Links to each dedicated .html page) -->
+    <nav class="bg-slate-950 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+      <div id="topNavTabs" class="max-w-[1440px] mx-auto px-2 sm:px-6 flex items-center gap-1 py-1.5 min-w-max"></div>
+    </nav>
+  </header>
+
+  <!-- WORKSPACE BODY (W3SCHOOLS LEFT SIDEBAR + BITE-SIZED PAGINATED LESSON VIEW) -->
+  <div class="max-w-[1440px] w-full mx-auto flex-1 flex relative">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900/95 border-r border-slate-800 shrink-0 hidden lg:flex flex-col justify-between p-4 sticky top-[105px] h-[calc(100vh-105px)] overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Chapter Lessons</h2>
+          <span id="sidebarLessonCount" class="text-[11px] font-mono text-slate-400">Lessons</span>
+        </div>
+        <div id="sidebarLessonList" class="space-y-1"></div>
+
+        <!-- Instant UUID v4 Tool -->
+        <div class="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-slate-200">🔑 Instant UUID v4</span>
+            <button id="sidebarGenUuidBtn" type="button" class="text-[11px] px-2 py-0.5 rounded bg-[#04AA6D] text-white font-semibold">New</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <input id="sidebarUuidOutput" type="text" readonly value="f47ac10b-58cc-4372-a567-0e02b2c3d479" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300 outline-none" />
+            <button id="sidebarCopyUuidBtn" type="button" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs border border-slate-700">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="text-slate-400">Exercise Progress</span>
+          <span id="sidebarCompletedText" class="font-mono font-bold text-emerald-400">0 / 6</span>
+        </div>
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="sidebarProgressBar" class="h-full bg-[#04AA6D] transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+    <div id="mobileDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 z-50 p-4 overflow-y-auto hidden lg:hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <span class="font-bold text-sm text-emerald-400">📚 Chapter Lessons</span>
+        <button id="closeMobileDrawerBtn" type="button" class="p-1.5 rounded bg-slate-800 text-slate-300 text-xs">✕</button>
+      </div>
+      <div id="mobileSidebarLessonList" class="space-y-1"></div>
+    </div>
+
+    <!-- MAIN LESSON VIEW (Paginated so it is never overwhelming to scroll) -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Top W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <span id="stepPageIndicator" class="text-xs font-mono text-emerald-400 font-semibold">Lesson 1</span>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+
+      
+<div class="lesson-step active space-y-6" data-step-title="1. Welcome sa MCBedrockSchools">
+  <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 grid lg:grid-cols-12 items-center">
+    <div class="lg:col-span-7 p-6 sm:p-8 space-y-4">
+      <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-bold">🟢 W3Schools-Style Multi-Page Portal</span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">Matuto Gumawa ng <span class="text-[#04AA6D]">Minecraft Bedrock Add-Ons</span></h1>
+      <p class="text-sm text-slate-300 leading-relaxed">
+        Bawat module ay nasa <strong>sariling HTML page at step-by-step lesson</strong> para hindi nakakalula basahin o i-scroll—eksaktong gaya ng W3Schools! May source code examples, live simulator, at mobile/PC workflows.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-1">
+        <a href="beginner-guide.html" class="w3-btn-green text-xs">📱 Start Beginner Guide (Mobile &amp; PC) ❯</a>
+        <a href="server-api.html" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold border border-slate-700">⚙️ @minecraft/server Docs</a>
+      </div>
+    </div>
+    <div class="lg:col-span-5 h-full">
+      <img src="images/hero-studio.jpg" alt="Minecraft Bedrock Coding Studio" class="w-full h-56 lg:h-full object-cover" />
+    </div>
+  </div>
+
+  <div class="w3-example-card space-y-3">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold text-white">W3Schools Example: Unang Script API Code (<code class="text-emerald-400">scripts/main.js</code>)</span>
+      <button type="button" data-copy-target="homeExCode" class="px-2.5 py-1 rounded bg-slate-800 text-xs text-slate-200">📋 Copy</button>
+    </div>
+    <pre class="w3-code-box"><code id="homeExCode">import { world } from "@minecraft/server";
+
+world.afterEvents.playerSpawn.subscribe((event) =&gt; {
+  event.player.sendMessage("§aWelcome sa Bedrock Modding, " + event.player.name + "!");
+});</code></pre>
+    <a href="tryit-practice.html?preset=welcome_spawn" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+</div>
+
+<div class="lesson-step space-y-6" data-step-title="2. Lahat ng Course Modules">
+  <h2 class="text-xl font-bold text-white">📚 Pumili ng Course Page</h2>
+  <p class="text-xs sm:text-sm text-slate-300">Bawat card sa ibaba ay magbubukas ng dedicated HTML course page nito:</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <a href="beginner-guide.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">📱</div>
+      <h3 class="font-bold text-white text-base">1. Beginner Guide (Mobile &amp; PC)</h3>
+      <p class="text-xs text-slate-400 mt-1">ZArchiver, Code Studio, at ibisPaint X starter workflow + High-End upgrades (bridge. v2, Blockbench, Acode).</p>
+    </a>
+    <a href="folder-structures.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">📁</div>
+      <h3 class="font-bold text-white text-base">2. Folder Structures</h3>
+      <p class="text-xs text-slate-400 mt-1">Interactive tree explorer para sa Behavior Pack (BP) at Resource Pack (RP).</p>
+    </a>
+    <a href="json-tutorial.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">📄</div>
+      <h3 class="font-bold text-white text-base">3. JSON Add-On Tutorial</h3>
+      <p class="text-xs text-slate-400 mt-1">Custom weapons, blocks, crafting recipes, entities, at Live JSON Validator.</p>
+    </a>
+    <a href="javascript-course.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">🟨</div>
+      <h3 class="font-bold text-white text-base">4. JavaScript for MCBE</h3>
+      <p class="text-xs text-slate-400 mt-1">ES6 imports, variables, event listeners, at 20-tick game loops.</p>
+    </a>
+    <a href="server-api.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">⚙️</div>
+      <h3 class="font-bold text-white text-base">5. @minecraft/server API</h3>
+      <p class="text-xs text-slate-400 mt-1">Kumpletong reference ng world, system, Player, Entity, ItemStack, at Events.</p>
+    </a>
+    <a href="server-ui-api.html" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition block">
+      <div class="text-2xl mb-2">🖥️</div>
+      <h3 class="font-bold text-white text-base">6. @minecraft/server-ui &amp; Sim</h3>
+      <p class="text-xs text-slate-400 mt-1">ActionFormData, ModalFormData, at MessageFormData na may Live In-Game UI Simulator!</p>
+    </a>
+  </div>
+</div>
+
+
+<div class="lesson-step space-y-6" data-step-title="3. Mga Add-On ni Teru">
+  <h2 class="text-xl font-bold text-white">🧩 Mga Add-On ni Teru Yagami</h2>
+  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Mga totoong Bedrock add-ons na ginawa gamit ang Script API — makikita sa CurseForge (<code class="text-emerald-300">terutherabbit</code>). Subukan ang mga ito para makita kung ano ang kayang gawin ng mga natutunan mo dito!</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <a href="https://www.curseforge.com/minecraft-bedrock/addons/team-party-reborn" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition flex flex-col gap-2 min-w-0">
+      <div class="text-2xl">🤝</div>
+      <h3 class="font-bold text-white text-base">Team Party Reborn — Achievement Friendly</h3>
+      <p class="text-xs text-slate-400 leading-relaxed flex-1">UI-driven na party management: gumawa ng teams, mag-private chat, i-disable ang friendly fire, mag-declare ng wars at duels, at mag-TPA sa teammates.</p>
+      <span class="text-xs font-semibold text-emerald-400">Tingnan sa CurseForge ❯</span>
+    </a>
+    <a href="https://www.curseforge.com/minecraft-bedrock/addons/apexpearl-tpa-lodestone-stasis-deathback" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition flex flex-col gap-2 min-w-0">
+      <div class="text-2xl">🟣</div>
+      <h3 class="font-bold text-white text-base">ApexPearl: TPA, Lodestone Stasis &amp; Deathback</h3>
+      <p class="text-xs text-slate-400 leading-relaxed flex-1">Teleportation add-on na may Player TPA menu, Lodestone Stasis pearls na gumagana kahit magkaibang dimension, at automatic na pagbalik sa death point — lahat gamit ang sneak gestures.</p>
+      <span class="text-xs font-semibold text-emerald-400">Tingnan sa CurseForge ❯</span>
+    </a>
+    <a href="https://www.curseforge.com/minecraft-bedrock/addons/apexclaimland-land-claim-grief-protection-waypoint" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#04AA6D] transition flex flex-col gap-2 min-w-0">
+      <div class="text-2xl">🛡️</div>
+      <h3 class="font-bold text-white text-base">ApexClaimLand: Land Claim, Grief Protection &amp; Waypoint Teleport</h3>
+      <p class="text-xs text-slate-400 leading-relaxed flex-1">Land claiming at proteksyon: pumili ng area gamit ang 2-corner gesture, i-set ang grief/explosion/PvP rules, mag-invite ng trusted players, at mag-teleport sa claim o kama kahit magkaibang dimension.</p>
+      <span class="text-xs font-semibold text-emerald-400">Tingnan sa CurseForge ❯</span>
+    </a>
+  </div>
+  <a href="https://www.curseforge.com/members/terutherabbit/projects" target="_blank" rel="noopener noreferrer" class="w3-btn-green text-xs">Lahat ng projects sa CurseForge »</a>
+</div>
+
+      <!-- Bottom W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-5 mt-8">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <a href="tryit-practice.html" class="order-last basis-full text-center sm:order-none sm:basis-auto text-xs text-emerald-400 hover:underline font-semibold">⚡ Buksan ang Try It Yourself Simulator</a>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer mt-8">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-8 grid gap-6 md:grid-cols-2 items-start">
+      <div class="space-y-2 min-w-0">
+        <div class="flex items-center gap-2">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-8 h-8 shrink-0 rounded-lg" />
+          <span class="font-extrabold text-white text-base">MCBedrock<span class="text-[#04AA6D]">Schools</span></span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">Libreng step-by-step lessons para sa Minecraft Bedrock add-ons — updated para sa Minecraft 1.26.50 (@minecraft/server 2.10.0).</p>
+        <p class="text-[11px] text-slate-500">Hindi opisyal na produkto ng Minecraft. Hindi kaakibat ng Mojang o Microsoft.</p>
+      </div>
+      <div class="space-y-3 min-w-0">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Sundan si Teru</h2>
+        <div class="flex flex-wrap gap-3">
+          <a class="social-link" href="https://www.curseforge.com/members/terutherabbit/projects" target="_blank" rel="noopener noreferrer">
+            <span class="w-8 h-8 shrink-0 rounded-lg bg-orange-500 text-white text-[11px] font-extrabold flex items-center justify-center">CF</span>
+            <span class="min-w-0">terutherabbit<small>CurseForge</small></span>
+          </a>
+          <a class="social-link" href="https://www.facebook.com/terutherabbit" target="_blank" rel="noopener noreferrer">
+            <span class="w-8 h-8 shrink-0 rounded-lg bg-blue-600 text-white text-base font-extrabold flex items-center justify-center">f</span>
+            <span class="min-w-0">Teru Yagami<small>Facebook</small></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-slate-800/70 py-3 px-4 text-center text-[11px] text-slate-500">© 2026 MCBedrockSchools · Ginawa ni Teru Yagami</div>
+  </footer>
+
+  <script src="scripts/common.js"></script>
+  
+</body>
+</html>

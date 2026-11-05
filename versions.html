@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Versions & Manifest Generator — MCBedrockSchools</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="versions" data-next-page="tryit-practice.html" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- W3SCHOOLS TOP HEADER -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileSidebarBtn" type="button" class="lg:hidden shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700" aria-label="Toggle Menu">
+          ☰
+        </button>
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-9 h-9 shrink-0 rounded-lg shadow" />
+          <div class="min-w-0 hidden min-[400px]:block">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-white">MCBedrock</span><span class="font-extrabold text-base sm:text-lg tracking-tight text-[#04AA6D]">Schools</span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">W3-Style Docs</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">Version Matrix, manifest.json &amp; UUID Generator</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="relative hidden md:block w-64">
+          <input id="globalSearchInput" type="text" placeholder="Search lessons, API, ZArchiver..." class="w-full bg-slate-800 border border-slate-700 focus:border-[#04AA6D] rounded-lg px-3 py-1.5 text-xs text-slate-100 outline-none" />
+          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-10 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50 divide-y divide-slate-800"></div>
+        </div>
+        <a href="tryit-practice.html" class="hidden sm:inline-block px-3 py-1.5 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white font-semibold text-xs">⚡ Try It Lab</a>
+        <div class="flex items-center gap-1.5 bg-slate-800 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs">
+          <span class="text-amber-400 font-bold">★</span>
+          <span id="xpCounterBadge" class="font-mono font-semibold text-emerald-400">0 XP</span>
+        </div>
+        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- SEPARATE MODULE TABS BAR (Links to each dedicated .html page) -->
+    <nav class="bg-slate-950 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+      <div id="topNavTabs" class="max-w-[1440px] mx-auto px-2 sm:px-6 flex items-center gap-1 py-1.5 min-w-max"></div>
+    </nav>
+  </header>
+
+  <!-- WORKSPACE BODY (W3SCHOOLS LEFT SIDEBAR + BITE-SIZED PAGINATED LESSON VIEW) -->
+  <div class="max-w-[1440px] w-full mx-auto flex-1 flex relative">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900/95 border-r border-slate-800 shrink-0 hidden lg:flex flex-col justify-between p-4 sticky top-[105px] h-[calc(100vh-105px)] overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Chapter Lessons</h2>
+          <span id="sidebarLessonCount" class="text-[11px] font-mono text-slate-400">Lessons</span>
+        </div>
+        <div id="sidebarLessonList" class="space-y-1"></div>
+
+        <!-- Instant UUID v4 Tool -->
+        <div class="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-slate-200">🔑 Instant UUID v4</span>
+            <button id="sidebarGenUuidBtn" type="button" class="text-[11px] px-2 py-0.5 rounded bg-[#04AA6D] text-white font-semibold">New</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <input id="sidebarUuidOutput" type="text" readonly value="f47ac10b-58cc-4372-a567-0e02b2c3d479" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300 outline-none" />
+            <button id="sidebarCopyUuidBtn" type="button" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs border border-slate-700">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="text-slate-400">Exercise Progress</span>
+          <span id="sidebarCompletedText" class="font-mono font-bold text-emerald-400">0 / 6</span>
+        </div>
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="sidebarProgressBar" class="h-full bg-[#04AA6D] transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+    <div id="mobileDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 z-50 p-4 overflow-y-auto hidden lg:hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <span class="font-bold text-sm text-emerald-400">📚 Chapter Lessons</span>
+        <button id="closeMobileDrawerBtn" type="button" class="p-1.5 rounded bg-slate-800 text-slate-300 text-xs">✕</button>
+      </div>
+      <div id="mobileSidebarLessonList" class="space-y-1"></div>
+    </div>
+
+    <!-- MAIN LESSON VIEW (Paginated so it is never overwhelming to scroll) -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Top W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <span id="stepPageIndicator" class="text-xs font-mono text-emerald-400 font-semibold">Lesson 1</span>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+
+      
+<div class="lesson-step active space-y-5" data-step-title="1. Paano Basahin ang Version">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 1: Paano Basahin ang Minecraft at Script API Version</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Bago ka magsulat ng <code class="text-emerald-300">manifest.json</code>, kailangan mong malaman kung anong <strong>Minecraft version</strong> ang target mo at kung anong <strong>module version</strong> ang kasama nito. Dalawang magkaibang numbering ang ginagamit natin:</p>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+      <h3 class="font-bold text-white text-sm">🎮 Minecraft (game) version</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">Halimbawa: <code class="text-amber-300">1.26.50</code>. Ito ang makikita mo sa game at sa CurseForge (madalas nakasulat na <code class="text-amber-300">26.50</code>). Sa manifest, isinusulat ito bilang array sa <code class="text-emerald-300">min_engine_version</code>:</p>
+      <pre class="w3-code-box"><code>"min_engine_version": [1, 26, 50]</code></pre>
+    </div>
+    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+      <h3 class="font-bold text-white text-sm">📦 Script module version</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">Halimbawa: <code class="text-amber-300">2.10.0</code> para sa <code class="text-emerald-300">@minecraft/server</code>. Hiwalay ang numbering nito at isinusulat bilang <strong>string</strong> sa <code class="text-emerald-300">dependencies</code>:</p>
+      <pre class="w3-code-box"><code>{ "module_name": "@minecraft/server",
+  "version": "2.10.0" }</code></pre>
+    </div>
+  </div>
+
+  <div class="w3-example-card space-y-2">
+    <h3 class="font-bold text-white text-sm">🩹 Paano naman ang 1.26.52?</h3>
+    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Ang pinakabagong release ay <strong>1.26.52</strong>, pero karaniwang bug-fix (hotfix) lang ito ng <strong>1.26.50</strong> at gumagamit ng parehong script module versions. Kaya ang itinuturo natin sa lesson na ito ay <strong>1.26.50</strong> — gamitin ang <code class="text-emerald-300">[1, 26, 50]</code> para gumana ang add-on mo sa 1.26.50 <em>at</em> sa 1.26.52.</p>
+  </div>
+
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[420px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4">Track</th>
+          <th class="py-3 px-4">Ibig sabihin</th>
+          <th class="py-3 px-4">Halimbawa</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800">
+        <tr><td class="py-2.5 px-4 font-bold text-emerald-400">Stable</td><td class="py-2.5 px-4 text-slate-300">Tapos na at ligtas gamitin. Walang suffix.</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.10.0"</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold text-amber-300">Beta</td><td class="py-2.5 px-4 text-slate-300">Bagong features na pwede pang magbago. May <code>-beta</code> sa dulo.</td><td class="py-2.5 px-4 font-mono text-amber-300">"2.11.0-beta"</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold text-sky-300">Preview</td><td class="py-2.5 px-4 text-slate-300">Hiwalay na Minecraft app para sa pag-test ng susunod na update.</td><td class="py-2.5 px-4 font-mono text-sky-300">1.26.60 Preview</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="2. Script API Version Matrix">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 2: Minecraft Bedrock &amp; Script API Version Compatibility Table</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Siguraduhing tugma ang <code class="text-emerald-300">min_engine_version</code> at ang module versions sa iyong <code class="text-emerald-300">manifest.json</code>. Narito ang mga halagang tugma sa bawat Minecraft release:</p>
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[640px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4">Minecraft Release</th>
+          <th class="py-3 px-4">min_engine_version</th>
+          <th class="py-3 px-4">@minecraft/server</th>
+          <th class="py-3 px-4">@minecraft/server-ui</th>
+          <th class="py-3 px-4">Beta APIs (server / ui)</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800">
+        <tr class="bg-emerald-500/5"><td class="py-2.5 px-4 font-bold">1.26.50 – 1.26.52 <span class="ml-1 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]">LATEST</span></td><td class="py-2.5 px-4 font-mono text-amber-300">[1, 26, 50]</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.10.0"</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.2.0"</td><td class="py-2.5 px-4 font-mono text-amber-300">"2.11.0-beta" / "2.3.0-beta"</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold">1.26.40</td><td class="py-2.5 px-4 font-mono text-amber-300">[1, 26, 40]</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.9.0"</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.1.0"</td><td class="py-2.5 px-4 font-mono text-amber-300">"2.10.0-beta" / "2.2.0-beta"</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold">1.26.30</td><td class="py-2.5 px-4 font-mono text-amber-300">[1, 26, 30]</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.8.0"</td><td class="py-2.5 px-4 font-mono text-emerald-300">"2.1.0"</td><td class="py-2.5 px-4 font-mono text-amber-300">"2.9.0-beta" / "2.2.0-beta"</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold text-slate-400">1.21.50 <span class="text-[10px]">(Legacy 1.x)</span></td><td class="py-2.5 px-4 font-mono text-amber-300">[1, 21, 50]</td><td class="py-2.5 px-4 font-mono text-emerald-300">"1.16.0"</td><td class="py-2.5 px-4 font-mono text-emerald-300">"1.3.0"</td><td class="py-2.5 px-4 text-slate-500">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="w3-example-card space-y-2">
+      <h3 class="font-bold text-white text-sm">✅ Tip: Gamitin ang pinakamataas na stable</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">Inirerekomenda ng Microsoft na ibase ang dependency sa pinakamataas na stable version na supported ng Minecraft version na tina-target mo. Sa stable track, <em>backwards-compatible</em> ang mga minor versions (semantic versioning).</p>
+    </div>
+    <div class="w3-example-card space-y-2">
+      <h3 class="font-bold text-white text-sm">💻 Para sa VS Code (autocomplete)</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">I-install ang type definitions na tugma sa manifest mo:</p>
+      <pre class="w3-code-box"><code>npm i @minecraft/server@2.10.0
+npm i @minecraft/server-ui@2.2.0</code></pre>
+    </div>
+  </div>
+  <p class="text-[11px] text-slate-500">Source: opisyal na Script API documentation ng Minecraft (learn.microsoft.com) at ng Script API version archive para sa v26.30, v26.40 at v26.50.</p>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="3. Anatomy ng manifest.json">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 3: Anatomy ng <code class="text-emerald-400">manifest.json</code> (Behavior Pack)</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Ang <code class="text-emerald-300">manifest.json</code> ang "ID card" ng pack. Dito nalalaman ng Minecraft kung ano ang pack mo, anong version ng game ang kailangan, at anong script modules ang gagamitin.</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>{
+  "format_version": 2,
+  "header": {
+    "name": "Pinoy Legends BP",
+    "description": "Custom weapons gamit ang Script API",
+    "uuid": "11111111-aaaa-4bbb-8ccc-111111111111",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 50]
+  },
+  "modules": [
+    { "type": "data",
+      "uuid": "22222222-aaaa-4bbb-8ccc-222222222222",
+      "version": [1, 0, 0] },
+    { "type": "script",
+      "language": "javascript",
+      "uuid": "33333333-aaaa-4bbb-8ccc-333333333333",
+      "entry": "scripts/main.js",
+      "version": [1, 0, 0] }
+  ],
+  "dependencies": [
+    { "module_name": "@minecraft/server", "version": "2.10.0" },
+    { "module_name": "@minecraft/server-ui", "version": "2.2.0" }
+  ]
+}</code></pre>
+  </div>
+
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[560px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4">Field</th>
+          <th class="py-3 px-4">Para saan?</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800 text-slate-300">
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">format_version</td><td class="py-2.5 px-4">Laging <code>2</code> para sa modernong pack manifest.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">header.uuid</td><td class="py-2.5 px-4">Natatanging ID ng buong pack. Bawat pack ay may sariling UUID.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">header.version</td><td class="py-2.5 px-4">Version ng pack mo (array ng 3 numbers). Dagdagan ito kapag nag-update ka.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">min_engine_version</td><td class="py-2.5 px-4">Pinakamababang Minecraft version na kayang magbukas ng pack mo.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">modules[type=data]</td><td class="py-2.5 px-4">Nagsasabing may data (items, entities, recipes) ang Behavior Pack. May sariling UUID.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">modules[type=script]</td><td class="py-2.5 px-4">Ang script module. <code>entry</code> ang unang JavaScript file na tatakbo; <code>language</code> ay laging <code>"javascript"</code>.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">dependencies</td><td class="py-2.5 px-4">Mga kailangang script module (<code>module_name</code> + <code>version</code> bilang string) o ibang pack (<code>uuid</code> + <code>version</code> bilang array).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs text-rose-200 leading-relaxed">
+    ⚠️ <strong>Mahalaga:</strong> Kailangang <strong>magkakaiba</strong> ang lahat ng UUID (header at bawat module). Huwag mag-copy-paste ng parehong UUID sa dalawang pack — gamitin ang <em>Instant UUID v4</em> tool sa sidebar o ang generator sa Lesson 6.
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="4. Stable vs Beta & 2.x Changes">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 4: Stable vs Beta APIs at ang mga Pagbabago sa 2.x</h1>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+      <h3 class="font-bold text-emerald-300 text-sm">🟢 Stable (hal. "2.10.0")</h3>
+      <ul class="text-xs text-slate-300 space-y-1 list-disc pl-4">
+        <li>Hindi kailangan ng "Beta APIs" toggle.</li>
+        <li>Hindi nawawala ang Achievements — <strong>achievement-friendly</strong>.</li>
+        <li>Hindi basta-basta nasisira kapag nag-update ang Minecraft.</li>
+      </ul>
+    </div>
+    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+      <h3 class="font-bold text-amber-300 text-sm">🟡 Beta (hal. "2.11.0-beta")</h3>
+      <ul class="text-xs text-slate-300 space-y-1 list-disc pl-4">
+        <li>Kailangang i-on ang <strong>Beta APIs</strong> sa World → Experiments.</li>
+        <li>Naka-off ang Achievements sa world na iyon.</li>
+        <li>Pwedeng magbago o mawala ang API sa susunod na update.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="text-sm text-slate-300 leading-relaxed">Kung mali ang version sa dependencies (hal. wala sa Minecraft version mo), hindi mag-lo-load ang script at may lalabas na error sa <em>Content Log</em> (Settings → Creator → Content Log).</p>
+
+  <h2 class="text-lg font-bold text-white pt-2">Ano ang nagbago mula 1.x papuntang 2.x?</h2>
+  <p class="text-xs sm:text-sm text-slate-300">Kung gumagamit ka ng <code class="text-emerald-300">@minecraft/server</code> 2.x (tulad ng 2.10.0), ito ang mga madalas na maging sanhi ng error kapag kinopya mo ang lumang tutorial:</p>
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[600px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4">Lumang code (1.x)</th>
+          <th class="py-3 px-4">Bagong code (2.x)</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800">
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">entity.applyKnockback(dx, dz, h, v)</td><td class="py-2.5 px-4 font-mono text-emerald-300">entity.applyKnockback({ x, z }, v)</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">entity.runCommandAsync(cmd)</td><td class="py-2.5 px-4 font-mono text-emerald-300">entity.runCommand(cmd) — o <code>system.runJob()</code></td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">world.beforeEvents.worldInitialize</td><td class="py-2.5 px-4 font-mono text-emerald-300">system.beforeEvents.startup</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">.slider("Label", 1, 10, 1, 5)</td><td class="py-2.5 px-4 font-mono text-emerald-300">.slider("Label", 1, 10, { valueStep: 1, defaultValue: 5 })</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">.dropdown("Label", items, 0)</td><td class="py-2.5 px-4 font-mono text-emerald-300">.dropdown("Label", items, { defaultValueIndex: 0 })</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">.textField("Label", "hint", "default")</td><td class="py-2.5 px-4 font-mono text-emerald-300">.textField("Label", "hint", { defaultValue: "default" })</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">.toggle("Label", true)</td><td class="py-2.5 px-4 font-mono text-emerald-300">.toggle("Label", { defaultValue: true })</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">effect.typeId → "speed"</td><td class="py-2.5 px-4 font-mono text-emerald-300">effect.typeId → "minecraft:speed"</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-[11px] text-slate-500">Ang rows para sa applyKnockback, runCommandAsync, worldInitialize at effect.typeId ay galing sa @minecraft/server 2.0.0 overview ng Microsoft; ang apat na ModalFormData rows ay galing sa @minecraft/server-ui 2.0.0 changelog.</p>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="5. BP at RP Manifest (Link)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 5: Paano Pagdugtungin ang Behavior Pack at Resource Pack</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Magkahiwalay ang manifest ng BP at RP. Para ma-activate ang RP kasabay ng BP mo, ilagay ang <strong>header UUID ng RP</strong> sa <code class="text-emerald-300">dependencies</code> ng BP. Mapapansin mo na ang RP ay gumagamit ng module type na <code class="text-emerald-300">"resources"</code>.</p>
+  <div class="grid lg:grid-cols-2 gap-4">
+    <div class="w3-example-card space-y-2">
+      <div class="text-xs font-bold text-white">📜 BP manifest (dependencies lang)</div>
+      <pre class="w3-code-box"><code>"dependencies": [
+  { "module_name": "@minecraft/server",
+    "version": "2.10.0" },
+  { "uuid": "44444444-aaaa-4bbb-8ccc-444444444444",
+    "version": [1, 0, 0] }
+]</code></pre>
+    </div>
+    <div class="w3-example-card space-y-2">
+      <div class="text-xs font-bold text-white">🎨 RP manifest.json</div>
+      <pre class="w3-code-box"><code>{
+  "format_version": 2,
+  "header": {
+    "name": "Pinoy Legends RP",
+    "description": "Textures at models",
+    "uuid": "44444444-aaaa-4bbb-8ccc-444444444444",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 50]
+  },
+  "modules": [
+    { "type": "resources",
+      "uuid": "55555555-aaaa-4bbb-8ccc-555555555555",
+      "version": [1, 0, 0] }
+  ]
+}</code></pre>
+    </div>
+  </div>
+  <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+    🔗 Pansinin: ang <code class="text-emerald-300">uuid</code> sa dependency ng BP ay <strong>eksaktong kapareho</strong> ng <code class="text-emerald-300">header.uuid</code> ng RP (<code>44444444-...</code>), hindi ng module uuid nito. Subukan ito sa generator sa susunod na lesson!
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="6. Live manifest.json Generator">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 6: Interactive <code class="text-emerald-400">manifest.json</code> Generator</h1>
+  <p class="text-sm text-slate-300">Piliin ang Minecraft version mo at kusa nang itatakda ang tamang <code class="text-emerald-300">min_engine_version</code> at module versions.</p>
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
+    <div class="grid sm:grid-cols-2 gap-3">
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Add-On Name</label>
+        <input id="mfNameInput" type="text" value="Pinoy Legends Add-On" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Description</label>
+        <input id="mfDescInput" type="text" value="Custom weapons at Script API!" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Minecraft Version</label>
+        <select id="mfMcVerSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+          <option value="1.26.50" selected>1.26.50 – 1.26.52 (Latest)</option>
+          <option value="1.26.40">1.26.40</option>
+          <option value="1.26.30">1.26.30</option>
+          <option value="1.21.50">1.21.50 (Legacy 1.x)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">API Channel (@minecraft/server)</label>
+        <select id="mfChannelSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+          <option value="stable" selected>Stable (Achievement-friendly)</option>
+          <option value="beta">Beta (kailangan ng Beta APIs toggle)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Include @minecraft/server-ui?</label>
+        <select id="mfUiToggleSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+          <option value="yes" selected>Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Ikabit ang Resource Pack (RP)?</label>
+        <select id="mfRpToggleSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+          <option value="no" selected>No (BP lang)</option>
+          <option value="yes">Yes (gumawa rin ng RP manifest)</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="mfInfoBox" class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed"></div>
+
+    <div class="flex flex-wrap gap-2 justify-between items-center">
+      <button id="regenManifestUuidBtn" type="button" class="w3-btn-green text-xs">🔄 Generate New UUIDs</button>
+      <button id="copyGeneratedManifestBtn" type="button" class="px-3 py-1.5 rounded bg-slate-800 text-xs text-slate-200 border border-slate-700">📋 Copy BP manifest.json</button>
+    </div>
+    <div>
+      <div class="text-[11px] font-mono text-emerald-400 mb-1">📜 MyAddon_BP/manifest.json</div>
+      <pre class="w3-code-box"><code id="generatedManifestCode"></code></pre>
+    </div>
+    <div id="rpManifestWrap" class="hidden">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+        <div class="text-[11px] font-mono text-emerald-400">🎨 MyAddon_RP/manifest.json</div>
+        <button id="copyGeneratedRpManifestBtn" type="button" class="px-3 py-1 rounded bg-slate-800 text-xs text-slate-200 border border-slate-700">📋 Copy RP manifest.json</button>
+      </div>
+      <pre class="w3-code-box"><code id="generatedRpManifestCode"></code></pre>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Bottom W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-5 mt-8">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <a href="tryit-practice.html" class="order-last basis-full text-center sm:order-none sm:basis-auto text-xs text-emerald-400 hover:underline font-semibold">⚡ Buksan ang Try It Yourself Simulator</a>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="scripts/common.js"></script>
+  <script src="scripts/manifest-builder.js"></script>
+</body>
+</html>

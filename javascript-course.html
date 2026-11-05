@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="tl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript for MCBE — MCBedrockSchools</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="javascript" data-next-page="server-api.html" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- W3SCHOOLS TOP HEADER -->
+  <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 min-w-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="mobileSidebarBtn" type="button" class="lg:hidden shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700" aria-label="Toggle Menu">
+          ☰
+        </button>
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+          <img src="images/logo-mcbe.svg" alt="MCBedrockSchools Logo" class="w-9 h-9 shrink-0 rounded-lg shadow" />
+          <div class="min-w-0 hidden min-[400px]:block">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-white">MCBedrock</span><span class="font-extrabold text-base sm:text-lg tracking-tight text-[#04AA6D]">Schools</span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">W3-Style Docs</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">JavaScript ES6 Fundamentals for Bedrock Modders</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="relative hidden md:block w-64">
+          <input id="globalSearchInput" type="text" placeholder="Search lessons, API, ZArchiver..." class="w-full bg-slate-800 border border-slate-700 focus:border-[#04AA6D] rounded-lg px-3 py-1.5 text-xs text-slate-100 outline-none" />
+          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-10 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto z-50 divide-y divide-slate-800"></div>
+        </div>
+        <a href="tryit-practice.html" class="hidden sm:inline-block px-3 py-1.5 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white font-semibold text-xs">⚡ Try It Lab</a>
+        <div class="flex items-center gap-1.5 bg-slate-800 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs">
+          <span class="text-amber-400 font-bold">★</span>
+          <span id="xpCounterBadge" class="font-mono font-semibold text-emerald-400">0 XP</span>
+        </div>
+        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- SEPARATE MODULE TABS BAR (Links to each dedicated .html page) -->
+    <nav class="bg-slate-950 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+      <div id="topNavTabs" class="max-w-[1440px] mx-auto px-2 sm:px-6 flex items-center gap-1 py-1.5 min-w-max"></div>
+    </nav>
+  </header>
+
+  <!-- WORKSPACE BODY (W3SCHOOLS LEFT SIDEBAR + BITE-SIZED PAGINATED LESSON VIEW) -->
+  <div class="max-w-[1440px] w-full mx-auto flex-1 flex relative">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900/95 border-r border-slate-800 shrink-0 hidden lg:flex flex-col justify-between p-4 sticky top-[105px] h-[calc(100vh-105px)] overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Chapter Lessons</h2>
+          <span id="sidebarLessonCount" class="text-[11px] font-mono text-slate-400">Lessons</span>
+        </div>
+        <div id="sidebarLessonList" class="space-y-1"></div>
+
+        <!-- Instant UUID v4 Tool -->
+        <div class="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-slate-200">🔑 Instant UUID v4</span>
+            <button id="sidebarGenUuidBtn" type="button" class="text-[11px] px-2 py-0.5 rounded bg-[#04AA6D] text-white font-semibold">New</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <input id="sidebarUuidOutput" type="text" readonly value="f47ac10b-58cc-4372-a567-0e02b2c3d479" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300 outline-none" />
+            <button id="sidebarCopyUuidBtn" type="button" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs border border-slate-700">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="text-slate-400">Exercise Progress</span>
+          <span id="sidebarCompletedText" class="font-mono font-bold text-emerald-400">0 / 6</span>
+        </div>
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="sidebarProgressBar" class="h-full bg-[#04AA6D] transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+    <div id="mobileDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 z-50 p-4 overflow-y-auto hidden lg:hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <span class="font-bold text-sm text-emerald-400">📚 Chapter Lessons</span>
+        <button id="closeMobileDrawerBtn" type="button" class="p-1.5 rounded bg-slate-800 text-slate-300 text-xs">✕</button>
+      </div>
+      <div id="mobileSidebarLessonList" class="space-y-1"></div>
+    </div>
+
+    <!-- MAIN LESSON VIEW (Paginated so it is never overwhelming to scroll) -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Top W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <span id="stepPageIndicator" class="text-xs font-mono text-emerald-400 font-semibold">Lesson 1</span>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+
+      
+<div class="lesson-step active space-y-5" data-step-title="1. Ano ang JavaScript?">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 1: Ano ang JavaScript? (Simpleng Paliwanag)</h1>
+  <p class="text-sm text-slate-300 leading-relaxed"><strong>JavaScript</strong> ay isang <strong>programming language</strong> — isang paraan ng pagsulat ng mga utos (instructions) na kayang intindihin ng computer. Kung ang JSON ay ang <em>listahan ng sangkap</em> (data), ang JavaScript ang <em>nagluluto</em>: ito ang nagsasabi ng <strong>kung ano ang mangyayari at kailan</strong>.</p>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+      <h3 class="font-bold text-white text-sm">📄 JSON = Data</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">"May espada na may 8 damage at tinatawag na <code class="text-emerald-300">pinoy:kampilan</code>." Hindi ito nag-iisip; naglalarawan lang.</p>
+    </div>
+    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+      <h3 class="font-bold text-white text-sm">🟨 JavaScript = Logic</h3>
+      <p class="text-xs text-slate-300 leading-relaxed">"<em>Kapag</em> ginamit ng player ang espada, <em>tapos</em> mag-dash siya at bigyan ng regeneration." Ito ang gumagawa ng aksyon.</p>
+    </div>
+  </div>
+
+  <h2 class="text-lg font-bold text-white pt-1">Saan ginagamit ang JavaScript?</h2>
+  <p class="text-sm text-slate-300 leading-relaxed">Sikat ito sa mga <strong>website</strong> (buttons, animations), sa mga app, at sa mga server. Sa Minecraft Bedrock, may <strong>sariling JavaScript engine sa loob mismo ng game</strong>. Tinatawag itong <strong>Script API</strong> (o Creator API) — dito ka makakagawa ng mga bagay na hindi kaya ng JSON lang.</p>
+
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[460px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4"></th>
+          <th class="py-3 px-4">JavaScript sa Website</th>
+          <th class="py-3 px-4">JavaScript sa Minecraft</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800 text-slate-300">
+        <tr><td class="py-2.5 px-4 font-bold">Tumatakbo sa</td><td class="py-2.5 px-4">Browser (Chrome, Safari)</td><td class="py-2.5 px-4">Loob ng Minecraft Bedrock</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold">Ginagamit para sa</td><td class="py-2.5 px-4">Webpage, buttons, forms</td><td class="py-2.5 px-4">Players, mobs, items, blocks, world</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold">Wala dito</td><td class="py-2.5 px-4">—</td><td class="py-2.5 px-4 font-mono">window, document, alert, require</td></tr>
+        <tr><td class="py-2.5 px-4 font-bold">Kinukuha mula sa</td><td class="py-2.5 px-4">Browser objects</td><td class="py-2.5 px-4 font-mono text-emerald-300">@minecraft/server, @minecraft/server-ui</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="text-lg font-bold text-white pt-1">Ang una mong Minecraft script</h2>
+  <p class="text-sm text-slate-300 leading-relaxed">Sa Minecraft, ang JavaScript ay <strong>nakikinig sa mga nangyayari sa world</strong> (events) at <strong>tumutugon</strong> dito. Heto ang pinakasimple — tatlong linya lang:</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>import { world } from "@minecraft/server";   // 1. kunin ang 'world' mula sa Minecraft
+
+world.afterEvents.playerSpawn.subscribe((event) =&gt; {   // 2. kapag nag-spawn ang isang player...
+  event.player.sendMessage("§aKumusta, " + event.player.name + "!");   // 3. ...batiin siya sa chat
+});</code></pre>
+    <a href="tryit-practice.html?preset=welcome_spawn" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <p class="text-xs text-slate-400">Ang <code class="text-amber-300">//</code> ay <strong>comment</strong> — hindi ito binabasa ng computer, para sa atin lang na magbabasa ng code.</p>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="2. Saan Isusulat ang Script?">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 2: <code class="text-emerald-400">scripts/main.js</code> at ang manifest</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Ang JavaScript mo ay isinusulat sa loob ng <strong>Behavior Pack</strong>, sa folder na <code class="text-emerald-300">scripts</code>. Ang file na tatakbo muna ay sinasabi ng <code class="text-emerald-300">entry</code> sa manifest.</p>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="w3-example-card space-y-2">
+      <div class="text-xs font-bold text-white">📁 Folder structure</div>
+      <pre class="w3-code-box"><code>MyAddon_BP/
+├── manifest.json
+├── pack_icon.png
+└── scripts/
+    └── main.js      &lt;- dito isusulat ang code</code></pre>
+    </div>
+    <div class="w3-example-card space-y-2">
+      <div class="text-xs font-bold text-white">📜 manifest.json (bahagi lang)</div>
+      <pre class="w3-code-box"><code>{ "type": "script",
+  "language": "javascript",
+  "uuid": "&lt;bagong-uuid&gt;",
+  "entry": "scripts/main.js",
+  "version": [1, 0, 0] }</code></pre>
+    </div>
+  </div>
+  <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
+    <p>✅ Dapat <strong>eksakto</strong> ang path (<code class="text-emerald-300">scripts/main.js</code>) at lowercase — case-sensitive sa Android.</p>
+    <p>✅ Ilista sa <code class="text-emerald-300">dependencies</code> ng manifest ang bawat module na ini-import mo (hal. <code class="text-emerald-300">@minecraft/server</code>). Tingnan ang <a href="versions.html" class="text-emerald-400 underline">Versions &amp; Manifest lesson</a> para sa tamang version ng 1.26.50.</p>
+    <p>🔁 Para makita ang pagbabago: lumabas at pumasok ulit sa world (o gamitin ang <code class="text-amber-300">/reload</code> kung available sa world mo).</p>
+    <p>🐞 Para makita ang mga error: Settings → Creator → i-on ang <strong>Content Log GUI</strong>.</p>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="3. ES6 Imports sa Bedrock">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 3: Paano Mag-Import ng Minecraft Modules sa JavaScript</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Sa Bedrock Script API, gumagamit tayo ng ES6 <code class="text-emerald-300">import</code> sa pinakaunang linya ng <code class="text-emerald-300">scripts/main.js</code>. Isinusulat sa loob ng <code class="text-amber-300">{ }</code> ang mga bagay na gusto mong kunin mula sa module:</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>import { world, system } from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";</code></pre>
+    <a href="tryit-practice.html?preset=welcome_spawn" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[520px]">
+      <thead>
+        <tr class="bg-slate-950 text-slate-300 border-b border-slate-800">
+          <th class="py-3 px-4">Pangalan</th>
+          <th class="py-3 px-4">Module</th>
+          <th class="py-3 px-4">Para saan?</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-800 text-slate-300">
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">world</td><td class="py-2.5 px-4 font-mono">@minecraft/server</td><td class="py-2.5 px-4">Ang buong mundo: players, dimensions, events.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">system</td><td class="py-2.5 px-4 font-mono">@minecraft/server</td><td class="py-2.5 px-4">Timers at ticks (<code>runInterval</code>, <code>runTimeout</code>).</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">ItemStack</td><td class="py-2.5 px-4 font-mono">@minecraft/server</td><td class="py-2.5 px-4">Gumawa ng bagong item para sa inventory.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">ActionFormData</td><td class="py-2.5 px-4 font-mono">@minecraft/server-ui</td><td class="py-2.5 px-4">Menu na may mga button.</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-emerald-300">ModalFormData</td><td class="py-2.5 px-4 font-mono">@minecraft/server-ui</td><td class="py-2.5 px-4">Form na may textfield, slider, dropdown, toggle.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-xs text-slate-400">⚠️ Case-sensitive: <code class="text-amber-300">ActionFormData</code> ≠ <code class="text-amber-300">actionformdata</code>. Kapag nakalimutan ang import, lalabas ang error na <em>"world is not defined"</em>.</p>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="4. Variables, Data Types & §">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 4: Variables (<code class="text-emerald-400">const</code> / <code class="text-emerald-400">let</code>), Data Types at Color Codes (<code class="text-emerald-400">§</code>)</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Ang <strong>variable</strong> ay parang kahon na may pangalan na pinaglalagyan ng value. Gamitin ang <code class="text-emerald-300">const</code> kapag hindi na mababago, at <code class="text-emerald-300">let</code> kapag babaguhin pa.</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>const weaponName = "Kampilan";               // string  (text, nasa loob ng "")
+let bonusDmg = 20;                           // number  (pwedeng baguhin dahil 'let')
+const isRare = true;                         // boolean (true o false)
+const skills = ["Dash", "Heal", "Fire"];     // array   (listahan)
+const stats = { damage: 8, speed: 1.2 };     // object  (may mga pangalan: key -&gt; value)
+
+bonusDmg = bonusDmg + 5;                     // ngayon 25
+
+// Template literal: gamitin ang `backticks` at ${...} para maglagay ng variable sa text
+world.sendMessage(`§6[Skill] §aAng ${weaponName} ay may +${bonusDmg} Damage!`);</code></pre>
+    <a href="tryit-practice.html?preset=item_use_skill" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <p class="text-sm text-slate-300 leading-relaxed">Sa Minecraft text, ang <code class="text-amber-300">§</code> ay nagbabago ng kulay o estilo ng sulat:</p>
+  <div class="flex flex-wrap gap-2 text-xs font-mono">
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-emerald-400">§a Green</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-rose-400">§c Red</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-yellow-300">§e Yellow</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-orange-300">§6 Gold</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-sky-300">§b Aqua</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-white font-bold">§l Bold</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300">§r Reset</span>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="5. Functions & Arrow Functions">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 5: Functions at Arrow Functions</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Ang <strong>function</strong> ay grupo ng mga utos na may pangalan — isulat nang isang beses, tawagin kahit ilang beses. Tumatanggap ito ng <em>parameters</em> (input) at pwedeng mag-<code class="text-emerald-300">return</code> ng sagot.</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>// Karaniwang function
+function showHud(player, text) {
+  player.onScreenDisplay.setActionBar(text);
+}
+
+// Function na nagre-return ng sagot
+function computeDamage(base, bonus) {
+  return base + bonus;
+}
+const total = computeDamage(8, 20);   // 28
+
+// Arrow function (mas maikli) - ito ang makikita mo sa mga event
+const double = (n) =&gt; n * 2;
+double(4);                            // 8</code></pre>
+    <a href="tryit-practice.html?preset=tick_loop_hud" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <p class="text-xs text-slate-400">Ang <code class="text-amber-300">(event) =&gt; { ... }</code> na ginagamit sa <code class="text-amber-300">.subscribe()</code> ay arrow function din — tatakbo ito tuwing may nangyaring event.</p>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="6. Conditions & Loops">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 6: <code class="text-emerald-400">if / else</code> at <code class="text-emerald-400">for...of</code> Loops</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Ang <code class="text-emerald-300">if</code> ay nagpapasya: tatakbo lang ang code kapag <strong>true</strong> ang kondisyon. Ang <code class="text-emerald-300">for...of</code> ay inuulit ang code para sa <strong>bawat item sa listahan</strong> (hal. bawat player).</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>for (const player of world.getAllPlayers()) {   // para sa BAWAT player...
+  if (player.isSneaking) {                       // ...kung nakayuko siya
+    player.sendMessage("§eNakayuko ka!");
+  } else if (player.location.y &lt; 0) {            // ...o kung nasa ilalim ng y = 0
+    player.sendMessage("§cMalalim na masyado!");
+  } else {
+    player.sendMessage("§aNakatayo ka.");
+  }
+}</code></pre>
+    <a href="tryit-practice.html?preset=tick_loop_hud" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[420px]">
+      <thead><tr class="bg-slate-950 text-slate-300 border-b border-slate-800"><th class="py-3 px-4">Operator</th><th class="py-3 px-4">Ibig sabihin</th><th class="py-3 px-4">Halimbawa</th></tr></thead>
+      <tbody class="divide-y divide-slate-800 text-slate-300">
+        <tr><td class="py-2.5 px-4 font-mono text-amber-300">===</td><td class="py-2.5 px-4">Magkapareho</td><td class="py-2.5 px-4 font-mono">item.typeId === "minecraft:apple"</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-amber-300">&amp;&amp;</td><td class="py-2.5 px-4">AT (dapat parehong true)</td><td class="py-2.5 px-4 font-mono">isRare &amp;&amp; bonusDmg &gt; 10</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-amber-300">||</td><td class="py-2.5 px-4">O (isa lang ang true)</td><td class="py-2.5 px-4 font-mono">hp &lt; 5 || isPoisoned</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-amber-300">!</td><td class="py-2.5 px-4">KABALIKTARAN</td><td class="py-2.5 px-4 font-mono">!player.isSneaking</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="7. Event Listeners (.subscribe)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 7: Paano Gumagana ang <code class="text-emerald-400">.subscribe()</code> Events</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Gumamit ng arrow function <code class="text-emerald-300">(event) =&gt; { ... }</code> para patakbuhin ang iyong code kapag may nangyari sa mundo. Ang <code class="text-emerald-300">event</code> ay may impormasyon tungkol sa nangyari:</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>world.afterEvents.entityHitEntity.subscribe((event) =&gt; {
+  const attacker = event.damagingEntity;   // sino ang pumalo
+  const target = event.hitEntity;          // sino ang pinalo
+  target.setOnFire(5, true);               // sunugin ng 5 segundo
+});</code></pre>
+    <a href="tryit-practice.html?preset=hit_fire_effect" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+
+  <h2 class="text-lg font-bold text-white pt-1"><code class="text-emerald-400">afterEvents</code> vs <code class="text-amber-300">beforeEvents</code></h2>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-slate-300 leading-relaxed"><strong class="text-emerald-300">afterEvents</strong> — nangyari na. Dito mo malayang magagamit ang halos lahat ng function (sendMessage, addEffect, spawnEntity…).</div>
+    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-slate-300 leading-relaxed"><strong class="text-amber-300">beforeEvents</strong> — mangyayari pa lang, kaya pwede mo itong i-<code>cancel</code>. Pero <strong>read-only</strong> ang mode: para magpalit ng bagay sa world, ibalot sa <code>system.run()</code>.</div>
+  </div>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>import { world, system } from "@minecraft/server";
+
+world.beforeEvents.playerBreakBlock.subscribe((event) =&gt; {
+  if (event.block.typeId === "minecraft:diamond_ore") {
+    event.cancel = true;                       // huwag hayaang masira
+    system.run(() =&gt; {                         // tumakbo sa susunod na tick
+      event.player.sendMessage("§cBawal sirain ang diamond ore dito!");
+    });
+  }
+});</code></pre>
+    <a href="tryit-practice.html?preset=before_break_protect" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="8. Game Ticks (20 Ticks = 1s)">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 8: <code class="text-emerald-400">system.runInterval()</code> at <code class="text-emerald-400">runTimeout()</code></h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Tandaan: <strong>20 ticks = 1 segundo</strong> sa Minecraft Bedrock! Ang <code class="text-emerald-300">runInterval</code> ay paulit-ulit, ang <code class="text-emerald-300">runTimeout</code> ay isang beses lang pagkatapos ng delay.</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>// Paulit-ulit: bawat 20 ticks (1 segundo)
+system.runInterval(() =&gt; {
+  for (const player of world.getAllPlayers()) {
+    player.onScreenDisplay.setActionBar("§bMana: 100/100");
+  }
+}, 20);
+
+// Isang beses: pagkatapos ng 100 ticks (5 segundo)
+system.runTimeout(() =&gt; {
+  world.sendMessage("§e5 segundo na ang lumipas!");
+}, 100);</code></pre>
+    <a href="tryit-practice.html?preset=tick_loop_hud" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <div class="flex flex-wrap gap-2 text-xs font-mono">
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-200">1 tick = 0.05s</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-200">20 ticks = 1s</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-200">100 ticks = 5s</span>
+    <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-200">1200 ticks = 1 minuto</span>
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="9. Mini Project: Skill + Cooldown">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 9: Pagsamahin Lahat — Custom Item Skill na may Cooldown</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Gamitin natin ang lahat ng natutunan: import, variables, if, event at ticks. Kapag ginamit ng player ang <code class="text-emerald-300">pinoy:bayanihan_blade</code>, magda-dash siya — pero may <strong>5 segundong cooldown</strong>.</p>
+  <div class="w3-example-card space-y-3">
+    <pre class="w3-code-box"><code>import { world, system } from "@minecraft/server";
+
+const cooldowns = new Map();                 // player.id -&gt; tick kung kailan pwede ulit
+
+world.afterEvents.itemUse.subscribe((event) =&gt; {
+  const player = event.source;
+  if (event.itemStack.typeId !== "pinoy:bayanihan_blade") return;   // ibang item? huwag pansinin
+
+  const now = system.currentTick;
+  if (now &lt; (cooldowns.get(player.id) ?? 0)) {
+    player.sendMessage("§cNagko-cooldown pa ang skill!");
+    return;
+  }
+  cooldowns.set(player.id, now + 100);       // 100 ticks = 5 segundo
+
+  const view = player.getViewDirection();
+  player.applyKnockback({ x: view.x * 3, z: view.z * 3 }, 0.5);   // dash pasulong
+  player.onScreenDisplay.setActionBar("§b⚡ Wind Dash!");
+});</code></pre>
+    <a href="tryit-practice.html?preset=item_cooldown" class="w3-btn-green text-xs">Try it Yourself »</a>
+  </div>
+  <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+    💡 Sa <code class="text-emerald-300">@minecraft/server</code> 2.x, ang <code class="text-emerald-300">applyKnockback</code> ay tumatanggap ng <strong>{ x, z }</strong> (kasama na ang lakas) at hiwalay na vertical strength — hindi na apat na number.
+  </div>
+</div>
+
+<div class="lesson-step space-y-5" data-step-title="10. Mga Karaniwang Error">
+  <h1 class="text-2xl font-extrabold text-white">Lesson 10: Mga Karaniwang Error at Paano Ayusin</h1>
+  <p class="text-sm text-slate-300 leading-relaxed">Normal ang magka-error — lahat ng programmer dumadaan dito. Buksan ang <strong>Content Log</strong> at hanapin ang pangalan ng error:</p>
+  <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <table class="w-full text-left text-xs border-collapse min-w-[560px]">
+      <thead><tr class="bg-slate-950 text-slate-300 border-b border-slate-800"><th class="py-3 px-4">Error</th><th class="py-3 px-4">Karaniwang dahilan</th><th class="py-3 px-4">Ayos</th></tr></thead>
+      <tbody class="divide-y divide-slate-800 text-slate-300">
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">world is not defined</td><td class="py-2.5 px-4">Nakalimutan ang import</td><td class="py-2.5 px-4">Idagdag ang <code>import { world } from "@minecraft/server";</code></td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">Cannot read properties of undefined</td><td class="py-2.5 px-4">Walang laman ang variable (hal. walang item sa kamay)</td><td class="py-2.5 px-4">Gumamit ng <code>?.</code> hal. <code>item?.typeId</code></td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">does not have required privileges</td><td class="py-2.5 px-4">Tinawag ang write function sa loob ng beforeEvent (read-only)</td><td class="py-2.5 px-4">Ibalot sa <code>system.run(() =&gt; { ... })</code></td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">is not a function</td><td class="py-2.5 px-4">Lumang function na inalis sa 2.x (hal. <code>runCommandAsync</code>)</td><td class="py-2.5 px-4">Gamitin ang <code>runCommand</code> o ang bagong bersyon</td></tr>
+        <tr><td class="py-2.5 px-4 font-mono text-rose-300">Script / dependency not loading</td><td class="py-2.5 px-4">Maling module version sa manifest</td><td class="py-2.5 px-4">Itugma sa <a href="versions.html" class="text-emerald-400 underline">version matrix</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="w3-example-card space-y-3">
+    <div class="text-xs font-bold text-white">Optional chaining (?.) at console.warn</div>
+    <pre class="w3-code-box"><code>const item = player.getComponent("minecraft:inventory")?.container?.getItem(player.selectedSlotIndex);
+
+if (item?.typeId === "minecraft:diamond_sword") {   // ligtas kahit walang item
+  console.warn("Diamond sword ang hawak!");          // lalabas sa Content Log
+}</code></pre>
+  </div>
+</div>
+
+      <!-- Bottom W3Schools Prev / Next Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-5 mt-8">
+        <button type="button" class="step-prev-btn px-3 sm:px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">❮ Previous</button>
+        <a href="tryit-practice.html" class="order-last basis-full text-center sm:order-none sm:basis-auto text-xs text-emerald-400 hover:underline font-semibold">⚡ Buksan ang Try It Yourself Simulator</a>
+        <button type="button" class="step-next-btn px-3 sm:px-4 py-2 rounded-lg bg-[#04AA6D] hover:bg-[#059862] text-white text-xs font-bold shadow transition">Next Lesson ❯</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="scripts/common.js"></script>
+  
+</body>
+</html>
