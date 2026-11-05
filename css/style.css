@@ -1,0 +1,208 @@
+/* ==========================================================================
+   MCBedrockSchools — W3Schools-Inspired Stylesheet (css/style.css)
+   ========================================================================== */
+:root {
+  --w3-green: #04AA6D;
+  --w3-green-dark: #059862;
+  --bg-main: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-code: #090d16;
+  --border-color: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+}
+
+body.light-mode {
+  --bg-main: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-code: #0f172a;
+  --border-color: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* W3Schools Signature Code Example Box */
+.w3-example-card {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.w3-code-box {
+  background-color: #090d16;
+  border-left: 4px solid var(--w3-green);
+  padding: 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #6ee7b7;
+}
+
+/* Step-by-Step Lesson Sub-Page Visibility (Prevents overwhelming scrolling) */
+.lesson-step {
+  display: none;
+  animation: fadeIn 0.2s ease-in-out;
+}
+.lesson-step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* W3Schools Next/Prev Buttons */
+.w3-btn-green {
+  background-color: var(--w3-green);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+.w3-btn-green:hover {
+  background-color: var(--w3-green-dark);
+}
+
+/* Minecraft In-Game UI Simulator Styling */
+.mc-ui-modal {
+  background: #c6c6c6;
+  border: 3px solid #000000;
+  box-shadow: inset 3px 3px 0px #ffffff, inset -3px -3px 0px #555555;
+  color: #1f1f1f;
+}
+
+.mc-ui-button {
+  background: #8b8b8b;
+  border: 2px solid #1e1e1e;
+  box-shadow: inset 2px 2px 0px #ffffff, inset -2px -2px 0px #494949;
+  color: #111111;
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+.mc-ui-button:hover {
+  background: #218306;
+  color: #ffffff;
+  box-shadow: inset 2px 2px 0px #55ff55, inset -2px -2px 0px #0e4b00;
+}
+
+/* ==========================================================================
+   Mobile / small-screen safety (no sideways scrolling)
+   ========================================================================== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* "clip" (not "hidden") so sticky header & sidebar keep working */
+body {
+  overflow-x: clip;
+}
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+}
+
+.lesson-step {
+  min-width: 0;
+}
+
+/* Long words / identifiers (e.g. @minecraft/server-ui) wrap instead of pushing the page wide */
+main h1, main h2, main h3, main p, main li, main label, main span {
+  overflow-wrap: anywhere;
+}
+:not(pre) > code {
+  overflow-wrap: anywhere;
+}
+
+/* Code blocks scroll inside their own box */
+.w3-example-card {
+  min-width: 0;
+  max-width: 100%;
+}
+.w3-code-box {
+  max-width: 100%;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+}
+.w3-code-box code {
+  overflow-wrap: normal;
+}
+
+@media (max-width: 480px) {
+  .w3-example-card { padding: 0.9rem; }
+  .w3-code-box { font-size: 0.72rem; padding: 0.75rem; }
+  main h1 { font-size: 1.35rem; line-height: 1.3; }
+}
+
+/* ==========================================================================
+   Site footer (homepage)
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid #1e293b;
+  background: #0b1220;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.social-link:hover {
+  border-color: var(--w3-green);
+  background: #111c33;
+}
+.social-link small {
+  display: block;
+  font-weight: 500;
+  color: #94a3b8;
+  font-size: 0.68rem;
+}
+body.light-mode .site-footer { background: #e2e8f0; border-top-color: #cbd5e1; }
+body.light-mode .social-link { background: #ffffff; color: #0f172a; border-color: #cbd5e1; }
+
+/* Grid / flex children may shrink below their content width (stops wide <pre> blocks from stretching the page) */
+.grid > *, .flex > * { min-width: 0; }
+.flex > button, .flex > .shrink-0, .flex > img, .flex > a.w3-btn-green { min-width: revert; }
