@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" width="800" height="240">
+  <rect width="800" height="240" rx="16" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <rect x="25" y="25" width="360" height="190" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="205" y="58" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#fbbf24">LOW-END / STARTER PHONE STACK</text>
+  <text x="205" y="92" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">1. ZArchiver (Folders &amp; .mcaddon zip)</text>
+  <text x="205" y="125" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">2. Code Studio / QuickEdit (JSON &amp; JS)</text>
+  <text x="205" y="158" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">3. ibisPaint X (16x16 Digital Pen PNG)</text>
+  <text x="205" y="190" font-family="monospace" font-size="12" text-anchor="middle" fill="#34d399">Magaan sa RAM • 100% Offline Friendly</text>
+
+  <rect x="415" y="25" width="360" height="190" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <text x="595" y="58" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#34d399">HIGH-END PHONE UPGRADE STACK</text>
+  <text x="595" y="92" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">1. bridge. v2 PWA (Auto-Complete IDE)</text>
+  <text x="595" y="125" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">2. Blockbench Mobile (3D Models &amp; Anim)</text>
+  <text x="595" y="158" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#f8fafc">3. Acode / Spck + Pixly / Pixel Studio</text>
+  <text x="595" y="190" font-family="monospace" font-size="12" text-anchor="middle" fill="#fbbf24">Pro Intellisense • 3D Entities • Git</text>
+</svg>
